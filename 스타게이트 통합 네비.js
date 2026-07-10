@@ -2,7 +2,7 @@
    STARGATE 통합 네비게이션 — JS 자동 주입 컴포넌트
    각 사이트 <body> 시작 직후 또는 끝부분에 다음 한 줄만 추가:
      <script src="/스타게이트 통합 네비.js" data-site="main"></script>
-   data-site 값: "main" | "blog" | "shop"
+   data-site 값: "main" | "blog" | "shop" | "edushop"
    ============================================================ */
 
 (function () {
@@ -26,6 +26,12 @@
       label: "쇼핑몰",
       tag: "STARGATE SHOP",
     },
+    edushop: {
+      name: "스타게이트 에듀 스토어",
+      url: "https://shop.stargateedu.co.kr",
+      label: "에듀 스토어",
+      tag: "STARGATE EDU SHOP",
+    },
   };
 
   // ── 현재 사이트 키 ──
@@ -35,6 +41,7 @@
   function detectSite() {
     const h = location.hostname;
     if (h.startsWith("blog.")) return "blog";
+    if (h.startsWith("shop.stargateedu")) return "edushop";
     if (h.includes("stargateshop")) return "shop";
     return "main";
   }
@@ -109,6 +116,7 @@
       <h4>사업영역</h4>
       <a href="${SITES.main.url}">AI · 공간계량</a>
       <a href="${SITES.shop.url}">디지털 상품</a>
+      <a href="${SITES.edushop.url}">교육 스토어</a>
       <a href="${SITES.blog.url}">연구 블로그</a>
     </div>
     <div class="sg-footer__col">
