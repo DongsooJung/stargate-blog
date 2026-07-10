@@ -16,7 +16,7 @@
     },
     blog: {
       name: "스타게이트 블로그",
-      url: "https://blog.stargateedu.co.kr",
+      url: "https://blog.stargateshop.co.kr",
       label: "블로그",
       tag: "STARGATE BLOG",
     },
