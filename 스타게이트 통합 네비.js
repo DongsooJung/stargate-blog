@@ -122,12 +122,13 @@
       <h4>운영</h4>
       <a href="${SITES.main.url}/이용약관.html">이용약관</a>
       <a href="${SITES.main.url}/개인정보처리방침.html">개인정보처리방침</a>
+      <a href="${SITES.main.url}/환불규정.html">환불규정</a>
       <a href="mailto:ceo@stargateedu.co.kr">고객지원</a>
     </div>
   </div>
   <div class="sg-footer__bottom">
     <span>© 2026 Stargate Corporation. All rights reserved.</span>
-    <span>주식회사 별의문 · 사업자등록 (예정)</span>
+    <span>주식회사 별의문 · 사업자등록번호 848-86-03835</span>
   </div>
 </footer>`;
   }
