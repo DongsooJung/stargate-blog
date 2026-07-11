@@ -104,7 +104,6 @@
       <h4>주식회사 별의문 (Stargate Corporation)</h4>
       <p style="margin:4px 0;line-height:1.7">
         대표 정동수 | 서울시 강남구 대치동 930-21, 2층<br>
-        <a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a><br>
         <a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a>
       </p>
     </div>
