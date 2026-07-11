@@ -105,7 +105,7 @@
       <p style="margin:4px 0;line-height:1.7">
         대표 정동수 | 서울시 강남구 대치동 930-21, 2층<br>
         <a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a><br>
-        <a href="mailto:info@stargate11.com">info@stargate11.com</a>
+        <a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a>
       </p>
     </div>
     <div class="sg-footer__col">
@@ -123,7 +123,7 @@
       <h4>운영</h4>
       <a href="${SITES.main.url}/이용약관.html">이용약관</a>
       <a href="${SITES.main.url}/개인정보처리방침.html">개인정보처리방침</a>
-      <a href="mailto:support@stargate11.com">고객지원</a>
+      <a href="mailto:ceo@stargateedu.co.kr">고객지원</a>
     </div>
   </div>
   <div class="sg-footer__bottom">
