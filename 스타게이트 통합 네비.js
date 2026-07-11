@@ -10,7 +10,7 @@
   const SITES = {
     main: {
       name: "스타게이트 본사",
-      url: "https://www.stargate11.com",
+      url: "https://portal.stargateedu.co.kr",
       label: "본사",
       tag: "STARGATE HQ",
     },
