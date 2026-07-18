@@ -15,4 +15,4 @@ blog.stargateshop.co.kr 정적 사이트 (GitHub Pages 호스팅).
 3. `git push` → 1\~2분 내 자동 반영
 
 ## 운영
-주식회사 별의문 (Stargate Corporation) · ceo@stargate11.com
+주식회사 별의문 (Stargate Corporation) · ceo@stargateedu.co.kr
