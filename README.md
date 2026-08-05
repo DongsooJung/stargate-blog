@@ -1,3 +1,12 @@
+# ⚠️ Legacy repository
+
+> Replaced by [DongsooJung/stargate-blog-hub](https://github.com/DongsooJung/stargate-blog-hub).  
+> Do not edit or deploy this repository as the current blog. Production: [blog.stargateedu.co.kr](https://blog.stargateedu.co.kr/)
+
+The content below is retained for historical reference.
+
+---
+
 # STARGATE 블로그
 
 blog.stargateshop.co.kr 정적 사이트 (GitHub Pages 호스팅).
