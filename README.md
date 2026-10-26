@@ -3,7 +3,13 @@
 > Replaced by [DongsooJung/stargate-blog-hub](https://github.com/DongsooJung/stargate-blog-hub).  
 > Do not edit or deploy this repository as the current blog. Production: [blog.stargateedu.co.kr](https://blog.stargateedu.co.kr/)
 
-The content below is retained for historical reference.
+The content below is retained for historical reference. The root page stays the old landing.
+
+## 읽기 앱
+
+`app/`은 글을 쓰는 곳이 아닙니다. 네이버, Blogger, 티스토리, Notion에 있는 글을 한 목록으로 읽습니다. 루트 `index.html`은 바꾸지 않습니다.
+
+목록은 `python3 scripts/build_feed.py`가 `app/feed.json`으로 만듭니다. 새 서버는 없습니다. 이 저장소의 GitHub Pages는 `main` 루트를 게시하므로, 머지되면 `https://blog.stargateshop.co.kr/app/`에서 열 수 있습니다. 배포 순서는 `app/README.md`에 있습니다.
 
 ---
 
