@@ -71,9 +71,9 @@ CHANNELS = [
         "name": "STARGATE MATH",
         "platform": "STARGATE",
         "topic": "수학·AI",
-        "blurb": "문제·힌트·단계별 풀이로 이어지는 수학 공부.",
+        "blurb": "수학 글을 아카이브에서 읽습니다.",
         "url": "https://blog.stargateedu.co.kr/math/",
-        "read": "external",
+        "read": "in-app",
     },
     {
         "id": "notion",
@@ -386,7 +386,7 @@ def collection_report(posts: list[dict], notion_generated_at: str) -> dict:
     for channel in CHANNELS:
         count = sum(1 for post in home if post["channelId"] == channel["id"])
         archive = sum(1 for post in posts if post["channelId"] == channel["id"] and not post["onHome"])
-        if channel["id"] == "notion":
+        if channel["id"] in {"notion", "math"} and archive:
             status = "archive"
         elif channel["id"] in {"youtube", "instagram", "math"}:
             status = "origin-only"
@@ -410,6 +410,64 @@ def collection_report(posts: list[dict], notion_generated_at: str) -> dict:
         "notionGeneratedAt": notion_generated_at,
         "notionStatus": "unchanged-file" if stale else "updated",
         "missing": [row["id"] for row in rows if row["status"] == "missing"],
+    }
+
+
+def math_body(item: dict) -> str:
+    steps = "".join(f"<li>{step}</li>" for step in item.get("solution") or [])
+    html_body = (
+        f"<p>{item.get('problem') or ''}</p>"
+        f"<h2>힌트</h2><p>{item.get('hint') or ''}</p>"
+        f"<h2>단계별 풀이</h2><ol>{steps}</ol>"
+        f"<h2>정답</h2><p>{item.get('answer') or ''}</p>"
+        f"<p>{item.get('copyright_note') or ''}</p>"
+    )
+    return sanitize(html_body)
+
+
+def math_posts(payload: dict) -> list[dict]:
+    posts = []
+    for item in payload.get("posts") or []:
+        published = item.get("published_at") or ""
+        if len(published) == 10:
+            published = f"{published}T12:00:00+09:00"
+        if not published and item.get("date"):
+            published = f"{item['date']}T12:00:00+09:00"
+        posts.append(
+            {
+                "id": "math-" + re.sub(r"[^0-9A-Za-z_-]", "", item["id"]),
+                "title": item["title"],
+                "url": item.get("canonical") or "https://blog.stargateedu.co.kr/math/",
+                "publishedAt": published or "2026-01-01T12:00:00+09:00",
+                "channelId": "math",
+                "topic": "수학·AI",
+                "summary": item.get("summary") or item.get("problem") or "",
+                "bodyHtml": math_body(item),
+                "read": "in-app",
+                "onHome": False,
+            }
+        )
+    return posts
+
+
+def daily_problem(payload: dict) -> dict:
+    item = (payload.get("posts") or [None])[0]
+    if not item:
+        return {
+            "title": "하루 한 문제",
+            "status": "자동발행 준비",
+            "detail": "발행 피드를 확인하는 중입니다.",
+            "href": "https://blog.stargateedu.co.kr/math/",
+            "phase": 4,
+        }
+    return {
+        "title": "하루 한 문제",
+        "status": " · ".join(part for part in (item.get("series"), item.get("level")) if part),
+        "detail": item.get("problem") or "",
+        "problemId": "math-" + re.sub(r"[^0-9A-Za-z_-]", "", item["id"]),
+        "href": item.get("canonical") or "https://blog.stargateedu.co.kr/math/",
+        "sourceUpdatedAt": payload.get("updated_at"),
+        "phase": 4,
     }
 
 
@@ -444,8 +502,10 @@ def main() -> None:
         parse_rss(fetch("https://rss.blog.naver.com/stargate8225.xml")),
     ]
     notion = json.loads(fetch(HUB + "posts/posts.json").decode("utf-8"))
+    math = json.loads(fetch(HUB + "math/posts.json").decode("utf-8"))
     posts = [post_record(item, indexes, True) for item in home]
     posts.extend(notion_posts(notion))
+    posts.extend(math_posts(math))
     feed = {
         "generatedAt": datetime.now(KST).isoformat(timespec="seconds"),
         "hub": {
@@ -457,13 +517,7 @@ def main() -> None:
         "topics": TOPICS,
         "channels": CHANNELS,
         "posts": posts,
-        "daily": {
-            "title": "하루 한 문제",
-            "status": "자동발행 준비",
-            "detail": "발행 피드를 확인하는 중입니다. 문제·힌트·풀이는 4단계입니다.",
-            "href": "https://blog.stargateedu.co.kr/math/",
-            "phase": 4,
-        },
+        "daily": daily_problem(math),
         "collection": collection_report(posts, notion.get("generated_at") or ""),
         "web": {
             "feedback": "https://blog.stargateedu.co.kr/#feedback",

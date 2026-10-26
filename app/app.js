@@ -131,7 +131,7 @@ function render() {
     brandNote.textContent = "흩어진 글을 한 목록으로";
     view.innerHTML = homeScreen();
   }
-  view.focus();
+  view.focus({ preventScroll: true });
 }
 
 function homeScreen() {
@@ -141,15 +141,15 @@ function homeScreen() {
   return `
     <section class="hero">
       <h1>오늘 읽을 글</h1>
-      <p class="lead">네이버, Blogger, 티스토리, Notion에 있는 글을 발행 시각순으로 모았습니다.</p>
+      <p class="lead">발행 시각순으로 모은 글입니다.</p>
       ${visitorBlock()}
-      ${dailyBlock()}
       <div class="topics" role="group" aria-label="주제">
         ${topicButton("", "시간순", !selected)}
         ${feed.topics.map((topic) => topicButton(topic.id, topic.name, selected === topic.id)).join("")}
       </div>
       <div class="section-label"><h2>${escapeHtml(label)}</h2><span>한국시간</span></div>
       <div class="list">${posts.map(postItem).join("") || `<p class="empty">이 주제의 글이 아직 목록에 없습니다.</p>`}</div>
+      ${selected ? "" : latestMathLink()}
     </section>`;
 }
 
@@ -160,8 +160,8 @@ function topicButton(id, name, pressed) {
 function visitorBlock() {
   const data = visitors || feed.visitors;
   const caption = data.live
-    ? `${data.date} 한국시간 · 허브와 같은 집계 · 같은 브라우저 하루 1회`
-    : `${data.date} 한국시간 스냅샷. 실시간 숫자는 blog.stargateedu.co.kr 에서 열릴 때 갱신됩니다.`;
+    ? `${data.date} · 같은 브라우저 하루 1회`
+    : `${data.date} 기준. 브랜드 주소에서 열면 갱신됩니다.`;
   return `
     <div class="stats">
       <div class="stat"><b>${Number(data.today).toLocaleString("ko-KR")}</b><span>오늘 방문</span></div>
@@ -170,14 +170,14 @@ function visitorBlock() {
     <p class="caption">${escapeHtml(caption)}</p>`;
 }
 
-function dailyBlock() {
-  const daily = feed.daily;
+function latestMathLink() {
+  const post = feed.daily && feed.posts.find((item) => item.id === feed.daily.problemId);
+  if (!post) return "";
   return `
-    <article class="daily">
-      <h2>${escapeHtml(daily.title)}</h2>
-      <p>${escapeHtml(daily.status)}. ${escapeHtml(daily.detail)}</p>
-      <a class="primary" href="${escapeHtml(daily.href)}" target="_blank" rel="noopener">수학 페이지 열기</a>
-    </article>`;
+    <a class="follow" href="#/read/${escapeHtml(post.id)}">
+      <span>수학 채널의 최근 글</span>
+      <strong>${escapeHtml(post.title)}</strong>
+    </a>`;
 }
 
 function channelsScreen() {
@@ -199,7 +199,7 @@ function channelScreen(id) {
   const posts = feed.posts.filter((post) => post.channelId === id)
     .slice()
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
-  const outside = channel.id === "math" || channel.id === "youtube" || channel.id === "instagram" || posts.length === 0;
+  const outside = posts.length === 0;
   return `
     <a class="back" href="#/channels">채널 목록</a>
     <article class="panel">
@@ -230,9 +230,11 @@ function readScreen(id) {
   const channel = feed.channels.find((item) => item.id === post.channelId);
   const head = `
     <a class="back" href="#/">목록</a>
-    <p class="meta">${escapeHtml(channel ? channel.name : "")} · ${escapeHtml(formatTime(post.publishedAt))} · ${escapeHtml(post.topic)}</p>
     <h1>${escapeHtml(post.title)}</h1>
-    <p><button class="bookmark" type="button" data-bookmark="${escapeHtml(post.id)}" aria-pressed="${state.bookmarks[post.id] ? "true" : "false"}">${state.bookmarks[post.id] ? "담김" : "담기"}</button></p>`;
+    <div class="read-tools">
+      <p class="meta">${escapeHtml(channel ? channel.name : "")} · ${escapeHtml(formatTime(post.publishedAt))} · ${escapeHtml(post.topic)}</p>
+      <button class="bookmark" type="button" data-bookmark="${escapeHtml(post.id)}" aria-pressed="${state.bookmarks[post.id] ? "true" : "false"}">${state.bookmarks[post.id] ? "담김" : "담기"}</button>
+    </div>`;
   if (post.read !== "in-app" || !post.bodyHtml) {
     const where = channel ? channel.platform : "원문";
     return `

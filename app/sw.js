@@ -1,4 +1,4 @@
-const CACHE = "stargate-reader-v2";
+const CACHE = "stargate-reader-v4";
 const SHELL = [
   "./",
   "./index.html",

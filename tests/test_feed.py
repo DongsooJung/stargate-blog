@@ -34,8 +34,9 @@ class FeedContract(unittest.TestCase):
 
     def test_external_channels_and_phase_boundaries(self):
         by_id = {channel["id"]: channel for channel in FEED["channels"]}
-        for channel_id in ("youtube", "instagram", "math", "naver-market", "naver-lab"):
+        for channel_id in ("youtube", "instagram", "naver-market", "naver-lab"):
             self.assertEqual(by_id[channel_id]["read"], "external")
+        self.assertEqual(by_id["math"]["read"], "in-app")
         self.assertEqual(FEED["daily"]["phase"], 4)
         self.assertIn("kr.co.stargateedu.twa", FEED["web"]["play"])
         self.assertEqual(FEED["publisher"]["name"], "STARGATE")
@@ -44,6 +45,22 @@ class FeedContract(unittest.TestCase):
         statuses = {row["id"]: row["status"] for row in FEED["collection"]["channels"]}
         self.assertEqual(statuses["notion"], "archive")
         self.assertEqual(statuses["youtube"], "origin-only")
+        self.assertEqual(statuses["math"], "archive")
+        math = [post for post in FEED["posts"] if post["channelId"] == "math"]
+        self.assertGreaterEqual(len(math), 10)
+        self.assertTrue(all(post["read"] == "in-app" and "힌트" in post["bodyHtml"] for post in math))
+        self.assertGreater(len(FEED["daily"]["detail"]), 20)
+        self.assertNotIn("자동발행", FEED["daily"]["detail"])
+        self.assertNotIn("정답", FEED["daily"]["detail"])
+        self.assertTrue(FEED["daily"]["problemId"].startswith("math-"))
+        daily_post = next(post for post in math if post["id"] == FEED["daily"]["problemId"])
+        problem, rest = daily_post["bodyHtml"].split("<h2>힌트</h2>", 1)
+        self.assertIn(FEED["daily"]["detail"], problem)
+        self.assertIn("<h2>정답</h2>", rest)
+        answer = rest.split("<h2>정답</h2>", 1)[1]
+        answer = answer.split("</p>", 1)[0].replace("<p>", "").strip()
+        self.assertTrue(answer)
+        self.assertNotIn(answer, FEED["daily"]["detail"])
         self.assertEqual(FEED["collection"]["missing"], [])
         self.assertEqual(FEED["collection"]["notionStatus"], "unchanged-file")
         self.assertNotIn("editor", json.dumps(FEED, ensure_ascii=False).lower())
