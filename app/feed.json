@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-26T15:08:31+09:00",
+  "generatedAt": "2026-10-27T07:39:41+09:00",
   "hub": {
     "url": "https://blog.stargateedu.co.kr/",
-    "generator": "stargate-blog-hub · 2026-10-26 05:28 KST",
+    "generator": "stargate-blog-hub · 2026-10-27 07:21 KST",
     "proposalBaseline": "2026-10-24 06:04 KST"
   },
   "visitors": {
-    "date": "2026-10-26",
+    "date": "2026-10-27",
     "today": 0,
     "total": 18,
     "source": "firebase",
@@ -116,6 +116,18 @@
   ],
   "posts": [
     {
+      "id": "naver-lab-224454294621",
+      "title": "AI 수학 튜터의 효과, 정답보다 ‘오답 뒤’에서 나타났습니다",
+      "url": "https://blog.naver.com/stargate8225/224454294621",
+      "publishedAt": "2026-10-26T16:19:06+09:00",
+      "channelId": "naver-lab",
+      "topic": "수학·AI",
+      "summary": "AI 수학 튜터는 문제를 더 빨리 풀게 할까요? 미국 중학생 6,000여 명이 참여한 무작위 실험은 다른 가능성을 보여줍니다. AI를 쓴 학생들은 연습을 더 많이 끝내기보다, 틀린 뒤 다시 맞히기까지 더 시간을 들이고 회복하는 모습이 나타났습니다. 6,000여 명이 참여한 수학 연습 실험 연구진은 테네시주 해밀턴 카운티…",
+      "bodyHtml": null,
+      "read": "external",
+      "onHome": true
+    },
+    {
       "id": "naver-lab-224453124197",
       "title": "AI가 수학을 증명했다면, 무엇을 믿어야 할까?",
       "url": "https://blog.naver.com/stargate8225/224453124197",
@@ -171,18 +183,6 @@
       "channelId": "naver-lab",
       "topic": "수학·AI",
       "summary": "“AI가 설명해 주면 편해요. 그런데 혼자 생각하는 힘이 줄어들지는 않을까요?” AI를 사용하는 학생들이 무조건 기술을 낙관하는 것은 아닙니다. 2026년 공개된 미국 RAND 연구보고서는 AI 활용의 증가와 학생들의 우려가 함께 나타난다는 점을 보여줍니다. 사용은 늘었지만, 확신은 부족했습니다 RAND가 2026년 3…",
-      "bodyHtml": null,
-      "read": "external",
-      "onHome": true
-    },
-    {
-      "id": "naver-lab-224450891662",
-      "title": "AI 수학 튜터, 켜두기만 하면 실력이 늘까요?",
-      "url": "https://blog.naver.com/stargate8225/224450891662",
-      "publishedAt": "2026-10-23T07:55:51+09:00",
-      "channelId": "naver-lab",
-      "topic": "수학·AI",
-      "summary": "수학 문제를 풀다가 막혔을 때, AI가 바로 옆에서 힌트를 준다면 어떨까요? 중요한 것은 AI의 존재 자체보다 학생이 그 도움을 어떻게 활용하느냐입니다. 2026년 공개된 연구는 ‘AI에 접근할 수 있는 것’과 ‘AI와 생각하며 공부하는 것’의 차이를 보여줍니다. 미국 중학교 18곳에서 확인한 사실 2026년 8월판 연…",
       "bodyHtml": null,
       "read": "external",
       "onHome": true
