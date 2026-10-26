@@ -379,6 +379,40 @@ def notion_posts(payload: dict) -> list[dict]:
     return posts
 
 
+def collection_report(posts: list[dict], notion_generated_at: str) -> dict:
+    """채널별 수집 결과. 허브 빌더가 같은 목록을 feed.json으로 쓸 때도 이 모양을 유지한다."""
+    home = [post for post in posts if post["onHome"]]
+    rows = []
+    for channel in CHANNELS:
+        count = sum(1 for post in home if post["channelId"] == channel["id"])
+        archive = sum(1 for post in posts if post["channelId"] == channel["id"] and not post["onHome"])
+        if channel["id"] == "notion":
+            status = "archive"
+        elif channel["id"] in {"youtube", "instagram", "math"}:
+            status = "origin-only"
+        elif count:
+            status = "ok"
+        else:
+            status = "missing"
+        rows.append(
+            {
+                "id": channel["id"],
+                "name": channel["name"],
+                "read": channel["read"],
+                "homeCount": count,
+                "archiveCount": archive,
+                "status": status,
+            }
+        )
+    stale = str(notion_generated_at or "").startswith("2026-09-12")
+    return {
+        "channels": rows,
+        "notionGeneratedAt": notion_generated_at,
+        "notionStatus": "unchanged-file" if stale else "updated",
+        "missing": [row["id"] for row in rows if row["status"] == "missing"],
+    }
+
+
 def visitors() -> dict:
     endpoint = "https://stargate.stargate8225.workers.dev/api/blog-visitors"
     try:
@@ -430,11 +464,20 @@ def main() -> None:
             "href": "https://blog.stargateedu.co.kr/math/",
             "phase": 4,
         },
+        "collection": collection_report(posts, notion.get("generated_at") or ""),
         "web": {
             "feedback": "https://blog.stargateedu.co.kr/#feedback",
             "survey": "https://blog.stargateedu.co.kr/#survey",
             "community": "https://blog.stargateedu.co.kr/#community",
             "play": "https://play.google.com/store/apps/details?id=kr.co.stargateedu.twa&referrer=utm_source%3Dblog-reader",
+            "origin": "https://blog.stargateedu.co.kr/app/",
+            "privacy": "https://stargateedu.co.kr/privacy.html",
+        },
+        "publisher": {
+            "name": "STARGATE",
+            "legalName": "주식회사 별의문",
+            "email": "ceo@stargateedu.co.kr",
+            "package": "kr.co.stargateedu.blog",
         },
         "notionArchive": {
             "generatedAt": notion.get("generated_at"),

@@ -38,6 +38,14 @@ class FeedContract(unittest.TestCase):
             self.assertEqual(by_id[channel_id]["read"], "external")
         self.assertEqual(FEED["daily"]["phase"], 4)
         self.assertIn("kr.co.stargateedu.twa", FEED["web"]["play"])
+        self.assertEqual(FEED["publisher"]["name"], "STARGATE")
+        self.assertEqual(FEED["publisher"]["email"], "ceo@stargateedu.co.kr")
+        self.assertEqual(FEED["web"]["origin"], "https://blog.stargateedu.co.kr/app/")
+        statuses = {row["id"]: row["status"] for row in FEED["collection"]["channels"]}
+        self.assertEqual(statuses["notion"], "archive")
+        self.assertEqual(statuses["youtube"], "origin-only")
+        self.assertEqual(FEED["collection"]["missing"], [])
+        self.assertEqual(FEED["collection"]["notionStatus"], "unchanged-file")
         self.assertNotIn("editor", json.dumps(FEED, ensure_ascii=False).lower())
 
 

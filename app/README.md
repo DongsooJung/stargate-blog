@@ -25,6 +25,8 @@ python3 -m unittest discover -s tests -p 'test_feed.py' -v
 
 `https://blog.stargateshop.co.kr/app/`
 
+공개 브랜드 주소는 `https://blog.stargateedu.co.kr/app/` 입니다. Play 패키지는 `android/`의 `kr.co.stargateedu.blog`이고, 스토어 문구는 `store/play-listing.md`입니다. 자산 링크 초안은 `.well-known/assetlinks.json`입니다. Play 앱 서명 인증서의 SHA-256이 나온 뒤 그 지문을 채워야 도메인 검증이 끝납니다. 허브 저장소에 같은 파일을 넣어야 `blog.stargateedu.co.kr`에서 제공됩니다.
+
 오늘·누적 방문의 실시간 조회는 워커가 `blog.stargateedu.co.kr` 출처만 허용합니다. 다른 주소에서는 목록을 만들 때 저장한 스냅샷을 보여 줍니다. 허브와 같은 주소에서 실시간 숫자를 보려면 `app/` 디렉터리를 `stargate-blog-hub`에 넣어 `https://blog.stargateedu.co.kr/app/`로 열면 됩니다.
 
 로컬 확인:

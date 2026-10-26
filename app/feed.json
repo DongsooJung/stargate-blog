@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T13:40:30+09:00",
+  "generatedAt": "2026-10-26T13:59:35+09:00",
   "hub": {
     "url": "https://blog.stargateedu.co.kr/",
     "generator": "stargate-blog-hub · 2026-10-26 05:28 KST",
@@ -441,11 +441,90 @@
     "href": "https://blog.stargateedu.co.kr/math/",
     "phase": 4
   },
+  "collection": {
+    "channels": [
+      {
+        "id": "naver-market",
+        "name": "스타게이트",
+        "read": "external",
+        "homeCount": 5,
+        "archiveCount": 0,
+        "status": "ok"
+      },
+      {
+        "id": "naver-lab",
+        "name": "스타게이트연구소",
+        "read": "external",
+        "homeCount": 5,
+        "archiveCount": 0,
+        "status": "ok"
+      },
+      {
+        "id": "blogger",
+        "name": "STARGATE · Google Blog",
+        "read": "in-app",
+        "homeCount": 5,
+        "archiveCount": 0,
+        "status": "ok"
+      },
+      {
+        "id": "tistory",
+        "name": "별로 향하는 문",
+        "read": "in-app",
+        "homeCount": 5,
+        "archiveCount": 0,
+        "status": "ok"
+      },
+      {
+        "id": "math",
+        "name": "STARGATE MATH",
+        "read": "external",
+        "homeCount": 0,
+        "archiveCount": 0,
+        "status": "origin-only"
+      },
+      {
+        "id": "notion",
+        "name": "Notion Archive",
+        "read": "in-app",
+        "homeCount": 0,
+        "archiveCount": 6,
+        "status": "archive"
+      },
+      {
+        "id": "youtube",
+        "name": "YouTube 우주인",
+        "read": "external",
+        "homeCount": 0,
+        "archiveCount": 0,
+        "status": "origin-only"
+      },
+      {
+        "id": "instagram",
+        "name": "소셜 네트워크",
+        "read": "external",
+        "homeCount": 0,
+        "archiveCount": 0,
+        "status": "origin-only"
+      }
+    ],
+    "notionGeneratedAt": "2026-09-12 20:47 KST",
+    "notionStatus": "unchanged-file",
+    "missing": []
+  },
   "web": {
     "feedback": "https://blog.stargateedu.co.kr/#feedback",
     "survey": "https://blog.stargateedu.co.kr/#survey",
     "community": "https://blog.stargateedu.co.kr/#community",
-    "play": "https://play.google.com/store/apps/details?id=kr.co.stargateedu.twa&referrer=utm_source%3Dblog-reader"
+    "play": "https://play.google.com/store/apps/details?id=kr.co.stargateedu.twa&referrer=utm_source%3Dblog-reader",
+    "origin": "https://blog.stargateedu.co.kr/app/",
+    "privacy": "https://stargateedu.co.kr/privacy.html"
+  },
+  "publisher": {
+    "name": "STARGATE",
+    "legalName": "주식회사 별의문",
+    "email": "ceo@stargateedu.co.kr",
+    "package": "kr.co.stargateedu.blog"
   },
   "notionArchive": {
     "generatedAt": "2026-09-12 20:47 KST",

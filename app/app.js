@@ -256,6 +256,14 @@ function readScreen(id) {
 function meScreen() {
   const saved = feed.posts.filter((post) => state.bookmarks[post.id]);
   const fresh = newPosts();
+  const publisher = feed.publisher || {
+    name: "STARGATE",
+    legalName: "주식회사 별의문",
+    email: "ceo@stargateedu.co.kr",
+    package: "kr.co.stargateedu.blog",
+  };
+  const origin = feed.web.origin || "https://blog.stargateedu.co.kr/app/";
+  const privacy = feed.web.privacy || "https://stargateedu.co.kr/privacy.html";
   return `
     <section>
       <h1>내 기록</h1>
@@ -274,6 +282,12 @@ function meScreen() {
         <a class="panel" href="${escapeHtml(feed.web.survey)}" target="_blank" rel="noopener"><h2>1분 설문</h2><p>관심 주제와 추천 의향은 웹에서 받습니다.</p></a>
         <a class="panel" href="${escapeHtml(feed.web.community)}" target="_blank" rel="noopener"><h2>자유게시판</h2><p>질문과 의견은 웹 게시판에 있습니다.</p></a>
         <a class="panel" href="${escapeHtml(feed.web.play)}" target="_blank" rel="noopener"><h2>KOI 채점과 상담</h2><p>기존 Play 앱 kr.co.stargateedu.twa 에 남겨 둡니다.</p></a>
+        <article class="panel">
+          <h2>${escapeHtml(publisher.name)}</h2>
+          <p>${escapeHtml(publisher.legalName)} · <a href="mailto:${escapeHtml(publisher.email)}">${escapeHtml(publisher.email)}</a></p>
+          <p>공개 주소 ${escapeHtml(origin)} · 패키지 ${escapeHtml(publisher.package)}</p>
+          <p><a href="${escapeHtml(privacy)}" target="_blank" rel="noopener">개인정보처리방침</a></p>
+        </article>
       </div>
       <p class="caption">7일 방문과 수집 실패는 3단계에서 이 화면에 붙입니다. 지금 숫자는 오늘과 누적입니다. Notion 본문 파일은 ${escapeHtml(feed.notionArchive.generatedAt)} 이후 갱신되지 않았습니다.</p>
     </section>`;

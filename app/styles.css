@@ -123,6 +123,7 @@ main:focus { outline: none; }
 
 .daily, .panel { padding: 16px; margin-bottom: 16px; }
 .daily h2, .panel h2 { margin: 0 0 6px; font-size: 1.05rem; }
+.panel a { color: var(--accent); }
 .daily p, .panel p { margin: 0; color: var(--muted); line-height: 1.55; }
 .primary {
   display: inline-block;
