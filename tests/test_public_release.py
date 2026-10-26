@@ -38,6 +38,11 @@ class PublicRelease(unittest.TestCase):
         self.assertIn("blog.stargateedu.co.kr", manifest)
         self.assertIn('android:pathPrefix="/app/"', manifest)
         self.assertIn("https://blog.stargateedu.co.kr/app/", strings)
+        self.assertIn('android:resizeableActivity="true"', manifest)
+        css = (ROOT / "app" / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("min-width: 900px", css)
+        self.assertIn("horizontal-viewport-segments: 2", css)
+        self.assertIn("fold-list", css)
 
     def test_launcher_icon_is_a_star_on_paper(self):
         for name, size in (("icon-192.png", 192), ("icon-512.png", 512)):

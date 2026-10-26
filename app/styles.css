@@ -189,6 +189,38 @@ main:focus { outline: none; }
 .stack a.panel { text-decoration: none; display: block; }
 .warn { color: var(--danger); }
 .empty { color: var(--muted); line-height: 1.55; }
-@media (min-width: 760px) {
+.item.is-current { border-color: var(--ink); }
+
+/* 갤럭시 폴드7 접힘 412×960. 펼침은 750×832(DPR 2.625) 또는 984×1092(DPR 2). */
+@media (min-width: 720px) and (min-height: 700px) {
+  .shell { width: min(1040px, 100%); }
+  .list { grid-template-columns: 1fr 1fr; }
+  .fold-list .list { grid-template-columns: 1fr; }
   .channels { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 1.7rem; }
+  .prose { max-width: 40rem; font-size: 1.125rem; }
+}
+@media (min-width: 900px) and (min-height: 700px) {
+  .shell { width: min(1120px, 100%); }
+  .fold {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .fold-list {
+    position: sticky;
+    top: 76px;
+    max-height: calc(100vh - 168px);
+    overflow: auto;
+  }
+}
+@media (horizontal-viewport-segments: 2) {
+  .fold {
+    display: grid;
+    grid-template-columns: env(viewport-segment-width 0 0) minmax(0, 1fr);
+    column-gap: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0));
+    align-items: start;
+  }
+  .fold-list { max-height: calc(100vh - 168px); overflow: auto; }
 }

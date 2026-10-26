@@ -36,6 +36,9 @@ KOI 채점과 상담은 스타게이트 STARGATE: 정보올림피아드·수학 
 - store/screenshots/01-home-posts.png — 핸드폰 홈. 시간순 글이 먼저 보입니다.
 - store/screenshots/02-article.png — 앱 안에서 글 본문을 읽습니다.
 - store/screenshots/03-channels.png — 고정된 8개 채널.
+- store/screenshots/04-fold7-cover.png — 갤럭시 폴드7 접힘 412×840.
+- store/screenshots/05-fold7-open-home.png — 펼친 화면 750×832, 글을 두 칸으로.
+- store/screenshots/06-fold7-open-read.png — 펼친 화면 984×1000, 목록과 본문.
 
 아이콘은 크림 바탕의 먹색 별입니다. app/icon-512.png 를 스토어 아이콘으로 올립니다.
 

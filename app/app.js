@@ -13,6 +13,8 @@ boot();
 
 async function boot() {
   window.addEventListener("hashchange", render);
+  const fold = window.matchMedia("(min-width: 900px) and (min-height: 700px), (horizontal-viewport-segments: 2)");
+  fold.addEventListener("change", render);
   document.body.addEventListener("click", onClick);
   try {
     feed = await loadFeed();
@@ -132,6 +134,12 @@ function render() {
     view.innerHTML = homeScreen();
   }
   view.focus({ preventScroll: true });
+  const scroller = document.querySelector(".fold-list");
+  const current = scroller?.querySelector(".is-current");
+  if (scroller && current) {
+    const delta = current.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+    scroller.scrollTop += delta - 8;
+  }
 }
 
 function homeScreen() {
@@ -224,7 +232,24 @@ function searchScreen(q) {
     <div class="list">${posts.map(postItem).join("") || `<p class="empty">맞는 글이 없습니다.</p>`}</div>`;
 }
 
+function unfoldedWide() {
+  return window.matchMedia("(min-width: 900px) and (min-height: 700px), (horizontal-viewport-segments: 2)").matches;
+}
+
 function readScreen(id) {
+  const article = readArticle(id);
+  if (!unfoldedWide()) return article;
+  const posts = topicId ? postsByTopic(topicId) : feed.posts.filter((post) => post.onHome);
+  return `
+    <div class="fold">
+      <aside class="fold-list" aria-label="글 목록">
+        <div class="list">${posts.map((post) => postItem(post, id)).join("")}</div>
+      </aside>
+      <div class="fold-article">${article}</div>
+    </div>`;
+}
+
+function readArticle(id) {
   const post = feed.posts.find((item) => item.id === id);
   if (!post) return `<p class="empty">글을 찾지 못했습니다.</p>`;
   const channel = feed.channels.find((item) => item.id === post.channelId);
@@ -295,10 +320,11 @@ function meScreen() {
     </section>`;
 }
 
-function postItem(post) {
+function postItem(post, currentId) {
   const channel = feed.channels.find((item) => item.id === post.channelId);
+  const current = post.id === currentId ? " is-current" : "";
   return `
-    <article class="item">
+    <article class="item${current}">
       <a href="#/read/${escapeHtml(post.id)}">
         <div class="meta">${escapeHtml(channel ? channel.name : "")} · ${escapeHtml(formatTime(post.publishedAt))}<span class="mode">${post.read === "in-app" ? "앱에서 읽기" : "원문"}</span></div>
         <h3>${escapeHtml(post.title)}</h3>
