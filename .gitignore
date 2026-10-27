@@ -13,3 +13,7 @@ Thumbs.db
 # Python
 __pycache__/
 *.pyc
+
+# Signing keys
+*.keystore
+*.jks
