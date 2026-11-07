@@ -1,0 +1,43 @@
+{
+  "packageId": "kr.co.stargateedu.blog",
+  "host": "blog.stargateedu.co.kr",
+  "name": "스타게이트 블로그",
+  "launcherName": "스타게이트 블로그",
+  "display": "standalone",
+  "themeColor": "#1C1915",
+  "themeColorDark": "#1C1915",
+  "navigationColor": "#1C1915",
+  "navigationColorDark": "#1C1915",
+  "navigationDividerColor": "#1C1915",
+  "navigationDividerColorDark": "#1C1915",
+  "backgroundColor": "#F4F1EA",
+  "enableNotifications": false,
+  "startUrl": "/app/",
+  "iconUrl": "https://raw.githubusercontent.com/DongsooJung/stargate-blog/main/app/icon-512.png",
+  "maskableIconUrl": "https://raw.githubusercontent.com/DongsooJung/stargate-blog/main/app/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "blog-upload.keystore",
+    "alias": "blog"
+  },
+  "appVersionName": "1.0.0",
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://raw.githubusercontent.com/DongsooJung/stargate-blog/main/app/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://blog.stargateedu.co.kr/app/",
+  "minSdkVersion": 24,
+  "orientation": "any",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": []
+}
