@@ -1,4 +1,4 @@
-var CACHE = "krv-1";
+var CACHE = "krv-2";
 var FILES = ["./index.html", "./styles.css", "./app.js", "./boot.js", "./text.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", function (event) {
@@ -7,13 +7,19 @@ self.addEventListener("install", function (event) {
 });
 
 self.addEventListener("activate", function (event) {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (key) { return key !== CACHE; }).map(function (key) { return caches.delete(key); }));
+    }).then(function () { return self.clients.claim(); })
+  );
 });
 
 self.addEventListener("fetch", function (event) {
   event.respondWith(
     caches.match(event.request).then(function (cached) {
-      return cached || fetch(event.request);
+      if (cached) return cached;
+      if (event.request.mode === "navigate") return caches.match("./index.html");
+      return fetch(event.request);
     })
   );
 });

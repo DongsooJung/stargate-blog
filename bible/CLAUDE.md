@@ -28,7 +28,7 @@ python3 -m http.server 4173
 1. SDK 36과 맞는 빌드 도구를 설치한다.
 2. `bible/android/build.gradle`의 Android Gradle Plugin이 SDK 36을 받지 못하면, 그 플러그인 버전만 올린다. 앱 코드와 본문은 그대로 둔다.
 3. 업로드 키를 새로 만든다. 저장소에 `.jks`를 커밋하지 않는다.
-4. `./gradlew :app:bundleRelease`로 AAB를 만든다.
+4. `bible/android`에서 `./gradlew :app:bundleRelease`로 AAB를 만든다. Gradle 8.13 래퍼가 저장소에 있다. 없는 것은 Android SDK뿐이다.
 5. 만든 앱을 비행기 모드에서 지웠다가 다시 설치한다. 창세기 1장이 바로 보여야 한다. 요한복음 3장으로 이동한 뒤 앱을 완전히 종료하고 다시 열면 그 장이 보여야 한다. 뒤로 가기는 찾기 창을 닫고, 본문에서는 앱을 종료한다.
 
 ## 2. 개인정보처리방침 공개

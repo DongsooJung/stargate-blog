@@ -285,14 +285,16 @@
 
   var params = new URLSearchParams(location.search);
   var ref = params.get("r");
+  var openedRef = false;
   if (ref) {
     var match = ref.match(/^([a-z0-9]+)\.(\d+)(?:\.([0-9]+(?:-[0-9]+)?))?$/);
     if (match && byId[match[1]] && Number(match[2]) >= 1 && Number(match[2]) <= byId[match[1]].c.length) {
       showChapter(match[1], Number(match[2]), match[3] || "");
+      openedRef = true;
     }
-  } else if (params.get("sheet")) {
-    openSheet(params.get("sheet"));
   }
+  if (!openedRef) showChapter(place.id, place.ch, place.verse || "");
+  if (!ref && params.get("sheet")) openSheet(params.get("sheet"));
   if (params.get("selftest") === "1") {
     var report = [];
     showChapter("jhn", 3, "16");
