@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>개역한글</title>
+  <meta name="description" content="앱을 열면 성경전서 개역한글판 본문이 바로 나옵니다.">
+  <meta name="theme-color" content="#f3ecdf">
+  <link rel="icon" href="./icon-192.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+    (function () {
+      var size = "21";
+      try { size = localStorage.getItem("krv-size") || size; } catch (e) {}
+      document.documentElement.style.setProperty("--size", size + "px");
+      if (history.scrollRestoration) history.scrollRestoration = "manual";
+    })();
+  </script>
+  <script src="./boot.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <button id="prev" type="button">이전</button>
+    <h1 id="title">창세기 1장</h1>
+    <button id="next" type="button">다음</button>
+  </header>
+  <main id="read" tabindex="-1"></main>
+  <script>
+    (function () {
+      var boot = window.KRV_BOOT;
+      var title = boot.title;
+      var body = boot.html;
+      var verse = "";
+      try {
+        var saved = JSON.parse(localStorage.getItem("krv") || "null");
+        if (saved && saved.v === boot.v && saved.html) {
+          title = saved.title || title;
+          body = saved.html;
+          verse = saved.verse || "";
+        }
+      } catch (e) {}
+      document.getElementById("title").textContent = title;
+      var read = document.getElementById("read");
+      read.innerHTML = body;
+      if (verse) {
+        var el = document.getElementById("v-" + verse);
+        if (el) {
+          var bar = document.querySelector(".bar");
+          var top = el.getBoundingClientRect().top + window.pageYOffset - (bar ? bar.offsetHeight : 52) - 8;
+          window.scrollTo(0, top);
+        }
+      }
+    })();
+  </script>
+  <nav class="tabs" aria-label="읽기 도구">
+    <button type="button" id="open-books" data-sheet="books">책</button>
+    <button type="button" id="open-search" data-sheet="search">찾기</button>
+    <button type="button" id="open-type" data-sheet="type">글자</button>
+    <button type="button" id="open-about" data-sheet="about">안내</button>
+  </nav>
+  <div id="sheet" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <header class="sheet-bar">
+        <h2 id="sheet-title">책</h2>
+        <button type="button" id="close-sheet">닫기</button>
+      </header>
+      <div id="sheet-body"></div>
+    </div>
+  </div>
+  <script src="./text.js" defer></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>
