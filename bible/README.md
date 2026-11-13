@@ -25,4 +25,4 @@ python3 bible/scripts/build_text.py
 
 플레이용 껍데기는 `bible/android`입니다. 패키지 이름은 `kr.co.stargateedu.bible`이고 targetSdk는 36입니다. 인터넷 권한은 없습니다. 빌드할 때 `www`를 앱 자산으로 복사합니다.
 
-이 환경에는 안드로이드 SDK가 없어 AAB를 만들지 못했습니다. 콘솔 업로드, 서명, 개인정보처리방침 공개 주소는 `CLAUDE.md`의 순서대로 이어서 하면 됩니다.
+이 환경에는 안드로이드 SDK가 없어 AAB를 만들지 못했습니다. 콘솔 업로드, 서명, 개인정보처리방침 공개 주소는 저장소 루트 `CLAUDE.md`의 순서대로 이어서 하면 됩니다.
