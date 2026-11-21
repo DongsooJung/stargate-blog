@@ -1,0 +1,242 @@
+:root {
+  --size: 21px;
+  --paper: #f3ecdf;
+  --ink: #241c15;
+  --muted: #7a6d5e;
+  --line: #e2d8c8;
+  --bar: #f7f2e8;
+  --mark: #6f2e2a;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Serif KR", "Source Han Serif K", "Nanum Myeongjo", "Batang", serif;
+}
+
+button, input {
+  font: inherit;
+  color: inherit;
+}
+
+.bar, .tabs, .sheet-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bar);
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  gap: 8px;
+  min-height: 52px;
+  padding: max(8px, env(safe-area-inset-top)) 12px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.bar h1, .sheet-bar h2 {
+  flex: 1;
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.bar button, .sheet-bar button, .tabs button, .books button, .chapters button, .sizes button, .hit {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.bar button {
+  min-width: 64px;
+  min-height: 40px;
+  border-radius: 8px;
+  color: var(--mark);
+  font-size: 16px;
+}
+
+.bar button:disabled {
+  color: #c4b8a8;
+  cursor: default;
+}
+
+main {
+  width: min(40rem, 100%);
+  margin: 0 auto;
+  padding: 18px 22px calc(84px + env(safe-area-inset-bottom));
+  font-size: var(--size);
+  line-height: 1.85;
+}
+
+.v {
+  margin: 0 0 0.85em;
+  scroll-margin-top: 68px;
+}
+
+.v sup {
+  margin-right: 0.45em;
+  color: var(--muted);
+  font-size: 0.62em;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.v.here {
+  background: #efe2c8;
+}
+
+.tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tabs button {
+  flex: 1;
+  min-height: 52px;
+  font-size: 16px;
+}
+
+.tabs button[aria-current="true"] {
+  color: var(--mark);
+  font-weight: 700;
+}
+
+body:has(#sheet:not([hidden])) .tabs {
+  visibility: hidden;
+}
+
+#sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: rgba(36, 28, 21, 0.35);
+}
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+
+.sheet-bar {
+  min-height: 52px;
+  padding: max(8px, env(safe-area-inset-top)) 8px 8px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sheet-bar button {
+  min-width: 64px;
+  min-height: 40px;
+  color: var(--mark);
+}
+
+#sheet-body {
+  overflow: auto;
+  padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
+}
+
+.group-label {
+  margin: 18px 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.books, .chapters, .sizes {
+  display: grid;
+  gap: 8px;
+}
+
+.books { grid-template-columns: repeat(3, 1fr); }
+.chapters { grid-template-columns: repeat(5, 1fr); }
+.sizes { grid-template-columns: repeat(4, 1fr); }
+
+.books button, .chapters button, .sizes button {
+  min-height: 46px;
+  border-radius: 8px;
+  background: #fffdf8;
+  border: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.books button[aria-current="true"],
+.chapters button[aria-current="true"],
+.sizes button[aria-current="true"] {
+  border-color: var(--mark);
+  color: var(--mark);
+}
+
+.search {
+  display: flex;
+  gap: 8px;
+}
+
+.search input {
+  flex: 1;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffdf8;
+}
+
+.search button, .back-books {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.hint, .about p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.hit {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  line-height: 1.55;
+}
+
+.hit b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--mark);
+  font-weight: 700;
+}
+
+.about h3 {
+  margin: 22px 0 8px;
+  font-size: 16px;
+}
+
+@media (min-width: 720px) {
+  .books { grid-template-columns: repeat(6, 1fr); }
+  .sheet { inset: 5vh 12vw; border: 1px solid var(--line); }
+}
