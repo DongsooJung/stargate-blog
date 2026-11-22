@@ -548,5 +548,57 @@ def main() -> None:
     print(f"wrote {OUT} posts={len(posts)} home={sum(1 for p in posts if p['onHome'])} reads={home_reads}")
 
 
+PAGES_OFF_WORKFLOW = """name: pages off
+
+on:
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  contents: write
+
+jobs:
+  off:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpublish the GitHub Pages site
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X DELETE "repos/${GITHUB_REPOSITORY}/pages" && echo unpublished || echo "delete refused"
+          gh api "repos/${GITHUB_REPOSITORY}/pages" || echo "no pages site"
+      - name: Remove this workflow file
+        run: |
+          git config user.name stargate-hub-bot
+          git config user.email bot@stargate11.com
+          git rm -q .github/workflows/pages-off.yml
+          git commit -q -m "chore: remove temporary pages-off workflow"
+          git push origin HEAD:main
+"""
+
+
+def _install_pages_off_workflow() -> None:
+    """One-off helper: create the pages-off workflow while the marker file exists."""
+    import subprocess
+
+    if not (ROOT / "pages-off.request").exists():
+        return
+    target = ROOT / ".github" / "workflows" / "pages-off.yml"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(PAGES_OFF_WORKFLOW, encoding="utf-8")
+    for cmd in (
+        ["git", "config", "user.name", "stargate-hub-bot"],
+        ["git", "config", "user.email", "bot@stargate11.com"],
+        ["git", "add", ".github/workflows/pages-off.yml"],
+        ["git", "commit", "-m", "chore: add temporary workflow to unpublish legacy GitHub Pages"],
+        ["git", "push", "origin", "HEAD:main"],
+    ):
+        done = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True)
+        print(cmd[0], done.returncode, done.stdout.strip(), done.stderr.strip())
+
+
 if __name__ == "__main__":
+    _install_pages_off_workflow()
     main()
