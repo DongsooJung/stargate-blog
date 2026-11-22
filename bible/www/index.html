@@ -22,7 +22,10 @@
 <body>
   <header class="bar">
     <button id="prev" type="button">이전</button>
-    <h1><button id="open-chapters" type="button" aria-haspopup="dialog" aria-controls="sheet" title="책과 장 선택"><span id="title">창세기 1장</span> <span aria-hidden="true">▾</span></button></h1>
+    <h1>
+      <button id="pick-book" type="button" aria-haspopup="dialog" aria-controls="sheet" title="책 선택"><span id="book-name">창세기</span> <span aria-hidden="true">▾</span></button>
+      <button id="open-chapters" type="button" aria-haspopup="dialog" aria-controls="sheet" title="장 선택"><span id="chapter-number">1장</span> <span aria-hidden="true">▾</span></button>
+    </h1>
     <button id="next" type="button">다음</button>
   </header>
   <main id="read" tabindex="-1"></main>
@@ -40,7 +43,11 @@
           verse = saved.verse || "";
         }
       } catch (e) {}
-      document.getElementById("title").textContent = title;
+      var labels = title.match(/^(.+) (\d+장)$/);
+      if (labels) {
+        document.getElementById("book-name").textContent = labels[1];
+        document.getElementById("chapter-number").textContent = labels[2];
+      }
       var read = document.getElementById("read");
       read.innerHTML = body;
       if (verse) {
