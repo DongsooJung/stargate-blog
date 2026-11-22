@@ -9,7 +9,9 @@
     byId[book.i] = book;
   });
 
-  var titleEl = document.getElementById("title");
+  var bookName = document.getElementById("book-name");
+  var chapterNumber = document.getElementById("chapter-number");
+  var bookPicker = document.getElementById("pick-book");
   var readEl = document.getElementById("read");
   var prevBtn = document.getElementById("prev");
   var nextBtn = document.getElementById("next");
@@ -54,7 +56,8 @@
       title: book.n + " " + chapter + "장",
       html: chapterHtml(verses)
     };
-    titleEl.textContent = place.title;
+    bookName.textContent = book.n;
+    chapterNumber.textContent = chapter + "장";
     readEl.innerHTML = place.html;
     document.title = place.title + " · 개역한글";
     var prevBook = chapter === 1 ? books[book.index - 1] : book;
@@ -95,7 +98,7 @@
       button.setAttribute("aria-current", button.dataset.sheet === name ? "true" : "false");
     });
     if (name === "chapters") renderChapters(place.id);
-    if (name === "books") renderBooks();
+    if (name === "books" || name === "quick-books") renderBooks();
     if (name === "search") renderSearch();
     if (name === "type") renderType();
     if (name === "about") renderAbout();
@@ -104,9 +107,10 @@
   }
 
   function closeSheet() {
-    var restorePickerFocus = !sheet.hidden && currentName === "chapters";
+    var opener = currentName === "quick-books" ? bookPicker : chapterPicker;
+    var restorePickerFocus = !sheet.hidden && (currentName === "chapters" || currentName === "quick-books");
     sheet.hidden = true;
-    if (restorePickerFocus) chapterPicker.focus({ preventScroll: true });
+    if (restorePickerFocus) opener.focus({ preventScroll: true });
     currentName = "";
     document.querySelectorAll(".tabs button").forEach(function (button) {
       button.setAttribute("aria-current", "false");
@@ -241,6 +245,7 @@
     ].join("");
   }
 
+  bookPicker.addEventListener("click", function () { openSheet("quick-books"); });
   chapterPicker.addEventListener("click", function () { openSheet("chapters"); });
   prevBtn.addEventListener("click", function () { step(-1); });
   nextBtn.addEventListener("click", function () { step(1); });
@@ -254,7 +259,8 @@
     var bookBtn = event.target.closest("[data-book]");
     if (bookBtn && !event.target.closest("[data-ch]")) {
       var chosen = byId[bookBtn.dataset.book];
-      if (chosen.c.length === 1) showChapter(chosen.i, 1, "");
+      if (currentName === "quick-books") showChapter(chosen.i, chosen.i === place.id ? place.ch : 1, "");
+      else if (chosen.c.length === 1) showChapter(chosen.i, 1, "");
       else renderChapters(chosen.i);
       return;
     }
@@ -286,7 +292,7 @@
   var book = byId[place.id];
   prevBtn.disabled = place.ch === 1 && book.index === 0;
   nextBtn.disabled = place.ch === book.c.length && book.index === books.length - 1;
-  document.title = (place.title || titleEl.textContent) + " · 개역한글";
+
 
   var params = new URLSearchParams(location.search);
   var ref = params.get("r");
@@ -308,7 +314,7 @@
     runSearch("태초");
     report.push(document.querySelector(".hit") ? "search-ok" : "search-fail");
     showChapter("gen", 1, "");
-    report.push(titleEl.textContent === "창세기 1장" ? "home-ok" : "home-fail");
+    report.push(bookName.textContent === "창세기" && chapterNumber.textContent === "1장" ? "home-ok" : "home-fail");
     openSheet("books");
     report.push(sheet.hidden ? "sheet-fail" : "sheet-ok");
     document.documentElement.setAttribute("data-selftest", report.join(" "));
