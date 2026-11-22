@@ -65,6 +65,13 @@ button, input {
   font-size: 16px;
 }
 
+.bar h1 button {
+  width: 100%;
+  min-height: 44px;
+  color: inherit;
+  font: inherit;
+}
+
 .bar button:disabled {
   color: #c4b8a8;
   cursor: default;

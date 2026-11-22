@@ -1,4 +1,4 @@
-var CACHE = "krv-2";
+var CACHE = "krv-3";
 var FILES = ["./index.html", "./styles.css", "./app.js", "./boot.js", "./text.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", function (event) {

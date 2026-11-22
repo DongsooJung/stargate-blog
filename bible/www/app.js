@@ -16,6 +16,7 @@
   var sheet = document.getElementById("sheet");
   var sheetTitle = document.getElementById("sheet-title");
   var sheetBody = document.getElementById("sheet-body");
+  var chapterPicker = document.getElementById("open-chapters");
   var currentName = "books";
   var place = loadPlace();
 
@@ -93,16 +94,19 @@
     document.querySelectorAll(".tabs button").forEach(function (button) {
       button.setAttribute("aria-current", button.dataset.sheet === name ? "true" : "false");
     });
+    if (name === "chapters") renderChapters(place.id);
     if (name === "books") renderBooks();
     if (name === "search") renderSearch();
     if (name === "type") renderType();
     if (name === "about") renderAbout();
-    var focus = sheetBody.querySelector("input, button");
+    var focus = name === "chapters" ? sheetBody.querySelector('[aria-current="true"]') : sheetBody.querySelector("input, button");
     if (focus) focus.focus();
   }
 
   function closeSheet() {
+    var restorePickerFocus = !sheet.hidden && currentName === "chapters";
     sheet.hidden = true;
+    if (restorePickerFocus) chapterPicker.focus({ preventScroll: true });
     currentName = "";
     document.querySelectorAll(".tabs button").forEach(function (button) {
       button.setAttribute("aria-current", "false");
@@ -237,6 +241,7 @@
     ].join("");
   }
 
+  chapterPicker.addEventListener("click", function () { openSheet("chapters"); });
   prevBtn.addEventListener("click", function () { step(-1); });
   nextBtn.addEventListener("click", function () { step(1); });
   document.getElementById("open-books").addEventListener("click", function () { openSheet("books"); });
