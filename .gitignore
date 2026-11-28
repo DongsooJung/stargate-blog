@@ -13,3 +13,6 @@ Thumbs.db
 # Python
 __pycache__/
 *.pyc
+
+# Regenerated beside text.js. The app reads text.js.
+bible/www/bible.json

@@ -1,3 +1,7 @@
+# 개역한글
+
+`bible/`은 성경전서 개역한글판을 열자마자 읽는 웹앱이다. 플레이 업로드처럼 이 저장소 밖에서 할 일은 `bible/CLAUDE.md`에 있다. 아래 블로그 안내는 예전 저장소 설명이다.
+
 # ⚠️ Legacy repository
 
 > Replaced by [DongsooJung/stargate-blog-hub](https://github.com/DongsooJung/stargate-blog-hub).  
